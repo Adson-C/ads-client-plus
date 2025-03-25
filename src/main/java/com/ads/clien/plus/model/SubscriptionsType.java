@@ -26,5 +26,4 @@ public class SubscriptionsType implements java.io.Serializable {
     private BigDecimal price;
     @Column(name = "product_key")
     private String productKey;
-
 }
