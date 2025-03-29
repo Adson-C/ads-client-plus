@@ -1,5 +1,6 @@
 package com.ads.clien.plus.service;
 
+import com.ads.clien.plus.dto.SubscriptionsTypeDTO;
 import com.ads.clien.plus.model.SubscriptionsType;
 
 import java.util.List;
@@ -11,9 +12,10 @@ public interface SubscriptionTypeService {
     // buscar por ID
     SubscriptionsType findById(Long id);
     // criar
-    SubscriptionsType create(SubscriptionsType subscriptionsType);
+    SubscriptionsType create(SubscriptionsTypeDTO dto);
+
     // editar
-    SubscriptionsType update(Long id, SubscriptionsType subscriptionsType);
+    SubscriptionsType update(Long id, SubscriptionsTypeDTO dto);
     // deletar
     void delete(Long id);
 }

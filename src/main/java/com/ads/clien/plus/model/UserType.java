@@ -16,7 +16,7 @@ public class UserType implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_type_id")
     private Long id;
     private String name;
