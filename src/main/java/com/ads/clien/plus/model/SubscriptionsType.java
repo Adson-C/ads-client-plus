@@ -17,13 +17,13 @@ import java.math.BigDecimal;
 public class SubscriptionsType implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subscriptions_type_id")
     private Long id;
     private String name;
     @Column(name = "access_months")
     private Long accessMonth;
     private BigDecimal price;
-    @Column(name = "product_key")
+    @Column(name = "product_key",unique = true)
     private String productKey;
 }

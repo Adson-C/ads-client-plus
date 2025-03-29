@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class UserPaymentInfo implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_payment_info_id")
     private Long id;
     private String cardNumber;
