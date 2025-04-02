@@ -1,5 +1,6 @@
 package com.ads.clien.plus.service.impl;
 
+import com.ads.clien.plus.controller.SubscriptionsTypeController;
 import com.ads.clien.plus.dto.SubscriptionsTypeDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
@@ -7,6 +8,7 @@ import com.ads.clien.plus.mapper.SubscriptionsTypeMapper;
 import com.ads.clien.plus.model.SubscriptionsType;
 import com.ads.clien.plus.repository.SubscriptionsRespository;
 import com.ads.clien.plus.service.SubscriptionTypeService;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +18,8 @@ import java.util.Optional;
 @Service
 public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
-
+    private static final String UPDATE = "update";
+    private static final String DELETE = "delete";
     private final SubscriptionsRespository subscriptionsTypeRepository;
 
     SubscriptionTypeServiceImpl(SubscriptionsRespository subscriptionsTypeRepository) {
@@ -30,7 +33,13 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
     @Override
     public SubscriptionsType findById(Long id) {
-        return getSubscriptionsType(id);
+        return getSubscriptionsType(id).add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SubscriptionsTypeController.class).findById(id)).withSelfRel()
+        ).add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SubscriptionsTypeController.class).update(id, new SubscriptionsTypeDTO())).withRel(UPDATE)
+        ).add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(SubscriptionsTypeController.class).delete(id)).withRel(DELETE)
+        );
     }
 
     @Override
