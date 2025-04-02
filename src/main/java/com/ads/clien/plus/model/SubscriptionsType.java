@@ -22,7 +22,7 @@ public class SubscriptionsType implements java.io.Serializable {
     private Long id;
     private String name;
     @Column(name = "access_months")
-    private Long accessMonth;
+    private Long accessMonths;
     private BigDecimal price;
     @Column(name = "product_key",unique = true)
     private String productKey;
