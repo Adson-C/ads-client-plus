@@ -3,6 +3,7 @@ package com.ads.clien.plus.service.impl;
 import com.ads.clien.plus.dto.SubscriptionsTypeDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
+import com.ads.clien.plus.mapper.SubscriptionsTypeMapper;
 import com.ads.clien.plus.model.SubscriptionsType;
 import com.ads.clien.plus.repository.SubscriptionsRespository;
 import com.ads.clien.plus.service.SubscriptionTypeService;
@@ -37,26 +38,16 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         if (Objects.nonNull(dto.getId())) {
             throw new BadReqequestExceptionAds("Id deve ser nulo");
         }
-        return subscriptionsTypeRepository.save(SubscriptionsType.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .accessMonth(dto.getAccessMonth())
-                .price(dto.getPrice())
-                .productKey(dto.getProductKey())
-                .build());
+        return subscriptionsTypeRepository.save(SubscriptionsTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
     public SubscriptionsType update(Long id, SubscriptionsTypeDTO dto) {
 
         getSubscriptionsType(id);
-        return subscriptionsTypeRepository.save(SubscriptionsType.builder()
-                .id(id)
-                .name(dto.getName())
-                .accessMonth(dto.getAccessMonth())
-                .price(dto.getPrice())
-                .productKey(dto.getProductKey())
-                .build());
+
+        dto.setId(id);
+        return subscriptionsTypeRepository.save(SubscriptionsTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override

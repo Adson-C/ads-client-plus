@@ -4,6 +4,7 @@ package com.ads.clien.plus.controller;
 import com.ads.clien.plus.dto.SubscriptionsTypeDTO;
 import com.ads.clien.plus.model.SubscriptionsType;
 import com.ads.clien.plus.service.SubscriptionTypeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class SubscriptionsTypeController {
     }
     // criando
     @PostMapping
-    public ResponseEntity<SubscriptionsType> create(@RequestBody SubscriptionsTypeDTO dto) {
+    public ResponseEntity<SubscriptionsType> create(@Valid @RequestBody SubscriptionsTypeDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
     }
     // atualizando
@@ -41,6 +42,7 @@ public class SubscriptionsTypeController {
 
     // deletando
     @DeleteMapping("/{id}")
+
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         subscriptionTypeService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
