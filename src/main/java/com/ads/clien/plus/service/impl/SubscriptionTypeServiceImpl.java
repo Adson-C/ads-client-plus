@@ -6,7 +6,7 @@ import com.ads.clien.plus.exception.BadReqequestExceptionAds;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
 import com.ads.clien.plus.mapper.SubscriptionsTypeMapper;
 import com.ads.clien.plus.model.SubscriptionsType;
-import com.ads.clien.plus.repository.SubscriptionsRespository;
+import com.ads.clien.plus.repository.SubscriptionsRepository;
 import com.ads.clien.plus.service.SubscriptionTypeService;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
     private static final String UPDATE = "update";
     private static final String DELETE = "delete";
-    private final SubscriptionsRespository subscriptionsTypeRepository;
+    private final SubscriptionsRepository subscriptionsTypeRepository;
 
-    SubscriptionTypeServiceImpl(SubscriptionsRespository subscriptionsTypeRepository) {
+    SubscriptionTypeServiceImpl(SubscriptionsRepository subscriptionsTypeRepository) {
         this.subscriptionsTypeRepository = subscriptionsTypeRepository;
     }
 
