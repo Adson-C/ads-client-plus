@@ -2,6 +2,8 @@ package com.ads.clien.plus.exception.handler;
 
 import com.ads.clien.plus.dto.error.ErrorResponseDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
+import com.ads.clien.plus.exception.BusinessexceptionAds;
+import com.ads.clien.plus.exception.IntegrationException;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -60,6 +62,25 @@ public class ResourceHandler {
                 .message(d.getMessage())
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .statusCode(HttpStatus.BAD_REQUEST.value())
+                .build());
+    }
+    @ExceptionHandler(IntegrationException.class)
+    public ResponseEntity<ErrorResponseDTO> IntegrationExceptionException(IntegrationException d) {
+        String errorMessage = d.getMessage();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponseDTO.builder()
+                .message(d.getMessage())
+                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .build());
+    }
+
+    @ExceptionHandler(BusinessexceptionAds.class)
+    public ResponseEntity<ErrorResponseDTO> badRequestExceptionads(BusinessexceptionAds ex) {
+        String errorMessage = ex.getMessage();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ErrorResponseDTO.builder()
+                .message(ex.getMessage())
+                .httpStatus(HttpStatus.CONFLICT)
+                .statusCode(HttpStatus.CONFLICT.value())
                 .build());
     }
 }

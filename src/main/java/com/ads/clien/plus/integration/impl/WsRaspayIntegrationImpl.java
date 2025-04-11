@@ -3,8 +3,10 @@ package com.ads.clien.plus.integration.impl;
 import com.ads.clien.plus.dto.wsraspay.CustomerDto;
 import com.ads.clien.plus.dto.wsraspay.OrderDto;
 import com.ads.clien.plus.dto.wsraspay.PaymentDto;
+import com.ads.clien.plus.exception.IntegrationException;
 import com.ads.clien.plus.integration.WsRaspayIntegration;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,6 +17,18 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class WsRaspayIntegrationImpl implements WsRaspayIntegration  {
 
+    @Value("${webservices.raspay.host}")
+    private String raspayHost;
+
+    @Value("${webservices.raspay.v1.customer}")
+    private String customerUrl;
+
+    @Value("${webservices.raspay.v1.order}")
+    private String orderUrl;
+
+    @Value("${webservices.raspay.v1.payment}")
+    private String paymentUrl;
+
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
 
@@ -24,26 +38,42 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration  {
     }
 
     @Override
-    public CustomerDto createCustomer(CustomerDto customerDto) {
+    public CustomerDto createCustomer(CustomerDto dto) {
         try {
 
-            HttpEntity<CustomerDto> request = new HttpEntity<>(customerDto, this.headers);
+            HttpEntity<CustomerDto> request = new HttpEntity<>(dto, this.headers);
             ResponseEntity<CustomerDto> response =
-                    restTemplate.exchange("http://localhost:8081/ws-raspay/v1/customer", HttpMethod.POST, request, CustomerDto.class);
+                    restTemplate.exchange(raspayHost+customerUrl, HttpMethod.POST, request, CustomerDto.class);
             return response.getBody();
-        }catch (Exception e) {
-            throw e;
+        }catch (IntegrationException e) {
+            throw new IntegrationException("Erro ao acessar o WebService Raspay: "+e.getMessage());
         }
     }
 
     @Override
-    public OrderDto createOrder(OrderDto orderDto) {
-        return null;
+    public OrderDto createOrder(OrderDto dto) {
+        try {
+
+            HttpEntity<OrderDto> request = new HttpEntity<>(dto, this.headers);
+            ResponseEntity<OrderDto> response =
+                    restTemplate.exchange(raspayHost+orderUrl, HttpMethod.POST, request, OrderDto.class);
+            return response.getBody();
+        }catch (IntegrationException e) {
+            throw new IntegrationException("Erro ao acessar o WebService Raspay: "+e.getMessage());
+        }
     }
 
     @Override
-    public Boolean processPayment(PaymentDto paymentDto) {
-        return null;
+    public Boolean processPayment(PaymentDto dto) {
+        try {
+
+            HttpEntity<PaymentDto> request = new HttpEntity<>(dto, this.headers);
+            ResponseEntity<Boolean> response =
+                    restTemplate.exchange(raspayHost+paymentUrl, HttpMethod.POST, request, Boolean.class);
+            return response.getBody();
+        }catch (IntegrationException e) {
+            throw new IntegrationException("Erro ao acessar o WebService Raspay: "+e.getMessage());
+        }
     }
     private HttpHeaders getHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
