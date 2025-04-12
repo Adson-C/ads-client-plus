@@ -6,6 +6,7 @@ import com.ads.clien.plus.dto.wsraspay.OrderDto;
 import com.ads.clien.plus.dto.wsraspay.PaymentDto;
 import com.ads.clien.plus.exception.BusinessexceptionAds;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
+import com.ads.clien.plus.integration.MailIntegration;
 import com.ads.clien.plus.integration.WsRaspayIntegration;
 import com.ads.clien.plus.mapper.UserPaymentInfoMapper;
 import com.ads.clien.plus.mapper.raspay.CreditCardMapper;
@@ -17,17 +18,22 @@ import com.ads.clien.plus.model.UserPaymentInfo;
 import com.ads.clien.plus.repository.UserPaymentInfoRepository;
 import com.ads.clien.plus.repository.UserRepository;
 import com.ads.clien.plus.service.PaymentInfoService;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+@Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
     private final UserRepository userRepository;
     private final UserPaymentInfoRepository userPaymentInfoRepository;
     private final WsRaspayIntegration wsRaspayIntegration;
-    PaymentInfoServiceImpl(UserRepository userRepository, UserPaymentInfoRepository userPaymentInfoRepository, WsRaspayIntegration wsRaspayIntegration){
+    private final MailIntegration mailIntegration;
+    PaymentInfoServiceImpl(UserRepository userRepository, UserPaymentInfoRepository userPaymentInfoRepository,
+                           WsRaspayIntegration wsRaspayIntegration, MailIntegration mailIntegration){
         this.userRepository = userRepository;
         this.userPaymentInfoRepository = userPaymentInfoRepository;
         this.wsRaspayIntegration = wsRaspayIntegration;
+        this.mailIntegration = mailIntegration;
     }
     @Override
     public Boolean processPayment(PaymentProcessDTO dto) {
@@ -49,16 +55,18 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         PaymentDto paymentDto = PaymentMapper.build(customerDto.getId(), orderDto.getId(), CreditCardMapper.build(dto.getUserPaymentInfoDTO(), user.getCpf()));
         Boolean successPayement = wsRaspayIntegration.processPayment(paymentDto);
 
-        if (successPayement){
+        if (Boolean.TRUE.equals(successPayement)){
 
             // salvar informacoes de pagamento
             UserPaymentInfo userPaymentInfo = UserPaymentInfoMapper.fromDtoToEntity(dto.getUserPaymentInfoDTO(), user);
             userPaymentInfoRepository.save(userPaymentInfo);
-        }
         // enviar email de criação de conta
+            mailIntegration.sendMail(user.getEmail(), "Usuario: " + user.getEmail() + " - Senha: aluno123 ", "Acesso Liberado");
+            return true;
+        }
         // retorna true ou false do pagamento
 
 
-        return null;
+        return false;
     }
 }

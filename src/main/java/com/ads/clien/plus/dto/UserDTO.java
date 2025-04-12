@@ -27,7 +27,9 @@ public class UserDTO {
     private String phone;
     @CPF(message = "CPF inválido")
     private String cpf;
+    @Builder.Default
     private LocalDate dtSubscription = LocalDate.now();
+    @Builder.Default
     private LocalDate dtExpiration = LocalDate.now();
     @NotNull
     private long userTypeId;

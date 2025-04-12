@@ -29,9 +29,10 @@ public class UserPaymentInfoDTO {
     private String cardSecurityCode;
 
     private BigDecimal price;
+    @Builder.Default
     private LocalDate dtPayment = LocalDate.now();
 
-    private Long insytallments;
+    private Long installments;
     @NotNull(message = "Nao pode ser vazio ou nulo")
     private long userId;
 }

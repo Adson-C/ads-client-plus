@@ -28,6 +28,9 @@ public class UserPaymentInfo implements java.io.Serializable {
     private Long cardExpirationYear;
     @Column(name = "card_security_code")
     private String cardSecurityCode;
+
+    @Column(name = "installments")
+    private Long installments;
     private BigDecimal price;
     @Column(name = "dt_payment")
     private LocalDate dtPayment;

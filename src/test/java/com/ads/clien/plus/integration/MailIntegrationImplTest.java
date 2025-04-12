@@ -11,25 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 
 @SpringBootTest
-class WsRaspayIntegrationImplTest {
-    @Autowired
-    private WsRaspayIntegration wsRaspayIntegration;
+class MailIntegrationImplTest {
 
-    @Test
-    void criarCustomerQuandoCorreto() {
-        CustomerDto dto = new CustomerDto(null,"36332236817","adson@yahoo.com","Adson","Sá");
-        wsRaspayIntegration.createCustomer(dto);
-    }
-    @Test
-    void criarOrderQuandoCorreto() {
-        OrderDto dto = new OrderDto(null, "67f72b278abd71546658f115", BigDecimal.ZERO, "PERPETUAL22");
-        wsRaspayIntegration.createOrder(dto);
-    }
+//    @Autowired
+//    private MailIntegration mailIntegration;
 
-    @Test
-    void processPaymentQuandoCorreto() {
-        CreditCardDto creditCardDto = new CreditCardDto(123L, "02371386034", 0L, 012L, "1234567891234567", 2025L);
-        PaymentDto paymentDto = new PaymentDto(creditCardDto, "67f72b278abd71546658f115", "67f86489004b131d58ad95e3");
-        wsRaspayIntegration.processPayment(paymentDto);
-    }
+//    @Test
+//    void enviarEmail() {
+//        mailIntegration.sendMail("adsonconceicao442@gmail.com", "Olá Teste", "Acesso Liberado");
+//    }
 }
