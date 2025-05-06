@@ -1,9 +1,9 @@
 package com.ads.clien.plus.mapper;
 
 import com.ads.clien.plus.dto.UserDTO;
-import com.ads.clien.plus.model.SubscriptionsType;
-import com.ads.clien.plus.model.User;
-import com.ads.clien.plus.model.UserType;
+import com.ads.clien.plus.model.jpa.SubscriptionsType;
+import com.ads.clien.plus.model.jpa.User;
+import com.ads.clien.plus.model.jpa.UserType;
 
 public class UserMapper {
 

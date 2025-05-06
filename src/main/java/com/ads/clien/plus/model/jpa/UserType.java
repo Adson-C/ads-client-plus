@@ -1,11 +1,12 @@
-package com.ads.clien.plus.model;
+package com.ads.clien.plus.model.jpa;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_type")

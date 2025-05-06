@@ -3,7 +3,7 @@ package com.ads.clien.plus.service.impl;
 import com.ads.clien.plus.dto.LoginDTO;
 import com.ads.clien.plus.dto.TokenDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
-import com.ads.clien.plus.model.UserCredentials;
+import com.ads.clien.plus.model.jpa.UserCredentials;
 import com.ads.clien.plus.service.AuthenticationService;
 import com.ads.clien.plus.service.TokenService;
 import com.ads.clien.plus.service.UserDetailsService;
