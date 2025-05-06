@@ -5,9 +5,11 @@ import com.ads.clien.plus.dto.SubscriptionsTypeDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
 import com.ads.clien.plus.mapper.SubscriptionsTypeMapper;
-import com.ads.clien.plus.model.SubscriptionsType;
-import com.ads.clien.plus.repository.SubscriptionsRepository;
+import com.ads.clien.plus.model.jpa.SubscriptionsType;
+import com.ads.clien.plus.repository.jpa.SubscriptionsRepository;
 import com.ads.clien.plus.service.SubscriptionTypeService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +28,14 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         this.subscriptionsTypeRepository = subscriptionsTypeRepository;
     }
 
+
+    @Cacheable(value = "subscriptiontype")
     @Override
     public List<SubscriptionsType> findAll() {
         return subscriptionsTypeRepository.findAll();
     }
 
+    @Cacheable(value = "subscriptiontype", key = "#id")
     @Override
     public SubscriptionsType findById(Long id) {
         return getSubscriptionsType(id).add(WebMvcLinkBuilder.linkTo(
@@ -42,6 +47,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         );
     }
 
+    @CacheEvict(value = "subscriptiontype", allEntries = true)
     @Override
     public SubscriptionsType create(SubscriptionsTypeDTO dto) {
         if (Objects.nonNull(dto.getId())) {
@@ -50,6 +56,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionsTypeRepository.save(SubscriptionsTypeMapper.fromDtoToEntity(dto));
     }
 
+    @CacheEvict(value = "subscriptiontype", allEntries = true)
     @Override
     public SubscriptionsType update(Long id, SubscriptionsTypeDTO dto) {
 
@@ -59,6 +66,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionsTypeRepository.save(SubscriptionsTypeMapper.fromDtoToEntity(dto));
     }
 
+    @CacheEvict(value = "subscriptiontype", allEntries = true)
     @Override
     public void delete(Long id) {
         getSubscriptionsType(id);

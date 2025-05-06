@@ -1,11 +1,11 @@
-package com.ads.clien.plus.model;
+package com.ads.clien.plus.model.jpa;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity

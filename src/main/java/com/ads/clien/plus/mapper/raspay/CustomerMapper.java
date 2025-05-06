@@ -1,7 +1,7 @@
 package com.ads.clien.plus.mapper.raspay;
 
 import com.ads.clien.plus.dto.wsraspay.CustomerDto;
-import com.ads.clien.plus.model.User;
+import com.ads.clien.plus.model.jpa.User;
 
 public class CustomerMapper {
 

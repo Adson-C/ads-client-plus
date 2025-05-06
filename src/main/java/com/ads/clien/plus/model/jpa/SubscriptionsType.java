@@ -1,9 +1,9 @@
-package com.ads.clien.plus.model;
+package com.ads.clien.plus.model.jpa;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity

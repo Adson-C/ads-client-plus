@@ -1,7 +1,7 @@
 package com.ads.clien.plus.mapper;
 
 import com.ads.clien.plus.dto.SubscriptionsTypeDTO;
-import com.ads.clien.plus.model.SubscriptionsType;
+import com.ads.clien.plus.model.jpa.SubscriptionsType;
 
 public class SubscriptionsTypeMapper {
 

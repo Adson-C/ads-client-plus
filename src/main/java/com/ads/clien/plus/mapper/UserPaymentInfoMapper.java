@@ -1,8 +1,8 @@
 package com.ads.clien.plus.mapper;
 
 import com.ads.clien.plus.dto.UserPaymentInfoDTO;
-import com.ads.clien.plus.model.User;
-import com.ads.clien.plus.model.UserPaymentInfo;
+import com.ads.clien.plus.model.jpa.User;
+import com.ads.clien.plus.model.jpa.UserPaymentInfo;
 
 public class UserPaymentInfoMapper {
 

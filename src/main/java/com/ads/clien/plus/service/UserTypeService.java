@@ -1,6 +1,6 @@
 package com.ads.clien.plus.service;
 
-import com.ads.clien.plus.model.UserType;
+import com.ads.clien.plus.model.jpa.UserType;
 
 import java.util.List;
 
