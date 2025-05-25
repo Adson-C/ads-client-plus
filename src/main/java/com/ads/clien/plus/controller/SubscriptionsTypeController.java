@@ -6,6 +6,7 @@ import com.ads.clien.plus.model.jpa.SubscriptionsType;
 import com.ads.clien.plus.service.SubscriptionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,26 +28,26 @@ public class SubscriptionsTypeController {
     }
     // retornado Id
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SubscriptionsType> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findById(id));
     }
     // criando
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SubscriptionsType> create(@Valid @RequestBody SubscriptionsTypeDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
     }
     // atualizando
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionsType> update(@PathVariable("id") Long id, @RequestBody SubscriptionsTypeDTO dto) {
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SubscriptionsType> update(@Valid @PathVariable("id") Long id, @RequestBody SubscriptionsTypeDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.update(id, dto));
     }
 
     // deletando
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         subscriptionTypeService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

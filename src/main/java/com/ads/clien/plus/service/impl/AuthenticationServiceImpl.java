@@ -3,6 +3,7 @@ package com.ads.clien.plus.service.impl;
 import com.ads.clien.plus.dto.LoginDTO;
 import com.ads.clien.plus.dto.TokenDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
+import com.ads.clien.plus.exception.NotFoundExceptionAds;
 import com.ads.clien.plus.model.jpa.UserCredentials;
 import com.ads.clien.plus.service.AuthenticationService;
 import com.ads.clien.plus.service.TokenService;
@@ -24,8 +25,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             UserCredentials userCredentials = userDetailsService.loadUserByUsernameAndPass(dto.getUsername(), dto.getPassword());
             String token = tokenService.getToken(userCredentials.getId());
             return TokenDTO.builder().token(token).type("Bearer").build();
+        } catch (NotFoundExceptionAds e) {
+            throw e;
         } catch (Exception e) {
-            throw new BadReqequestExceptionAds("Usuário ou senha inválidos" + e.getMessage());
+            throw new BadReqequestExceptionAds("Usuário ou senha inválidos" + e.getMessage());
         }
     }
 }
