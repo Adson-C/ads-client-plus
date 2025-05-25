@@ -42,8 +42,4 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<TokenDto> auth(@RequestBody @Valid LoginDto dto) {
-//        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.auth(dto));
-//    }
 }

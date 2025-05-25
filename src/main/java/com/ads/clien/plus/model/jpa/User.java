@@ -32,10 +32,15 @@ public class User implements java.io.Serializable {
     private LocalDate dtSubscription;
     @Column(name = "dt_expiration")
     private LocalDate dtExpiration;
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @Column(name = "photo_name")
+    private String photoName;
+    private byte[] photo;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_type_id")
     private UserType userType;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscriptions_type_id")
     private SubscriptionsType subscriptionsType;
 }
