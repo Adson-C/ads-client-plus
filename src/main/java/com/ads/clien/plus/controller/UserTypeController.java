@@ -1,6 +1,6 @@
 package com.ads.clien.plus.controller;
 
-import com.ads.clien.plus.model.UserType;
+import com.ads.clien.plus.model.jpa.UserType;
 import com.ads.clien.plus.service.UserTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

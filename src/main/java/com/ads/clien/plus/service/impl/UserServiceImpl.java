@@ -4,25 +4,28 @@ import com.ads.clien.plus.dto.UserDTO;
 import com.ads.clien.plus.exception.BadReqequestExceptionAds;
 import com.ads.clien.plus.exception.NotFoundExceptionAds;
 import com.ads.clien.plus.mapper.UserMapper;
-import com.ads.clien.plus.model.User;
-import com.ads.clien.plus.model.UserType;
-import com.ads.clien.plus.repository.UserRepository;
-import com.ads.clien.plus.repository.UserTypeRepository;
+import com.ads.clien.plus.model.jpa.User;
+import com.ads.clien.plus.model.jpa.UserType;
+import com.ads.clien.plus.repository.jpa.UserRepository;
+import com.ads.clien.plus.repository.jpa.UserTypeRepository;
 import com.ads.clien.plus.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserTypeRepository userTypeRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository) {
-        this.userRepository = userRepository;
-        this.userTypeRepository = userTypeRepository;
-    }
+
+//    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository) {
+//        this.userRepository = userRepository;
+//        this.userTypeRepository = userTypeRepository;
+//    }
     @Override
     public User create(UserDTO dto) {
         if (Objects.nonNull(dto.getId())) {

@@ -1,27 +1,36 @@
 package com.ads.clien.plus.configuration;
 
 import com.ads.clien.plus.filter.TokenAuthenticationFilter;
-import com.ads.clien.plus.repository.UserDetailsRepository;
+import com.ads.clien.plus.repository.jpa.UserDetailsRepository;
 import com.ads.clien.plus.service.TokenService;
+import com.ads.clien.plus.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 @Configuration
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
 
+    @Value("${swagger.auth.username}")
+    private String swaggerUsername;
+
+    @Value("${swagger.auth.password}")
+    private String swaggerPassword;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private UserDetailsRepository userDetailsRepository;
@@ -29,20 +38,34 @@ public class WebSecurityConfig  {
     //responsável pela configuração de autorizacao -> Acesso a URL's
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/subscription-type").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/subscription-type/*").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/user").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/payment/process").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(new TokenAuthenticationFilter(tokenService, userDetailsRepository), UsernamePasswordAuthenticationFilter.class)
-                .build();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/subscription-type").permitAll()
+                .antMatchers(HttpMethod.GET, "/subscription-type/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
+                .antMatchers(HttpMethod.POST, "/payment/process").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers( "/auth/recovery-code/*").permitAll()
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated() // Protege o Swagger
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().disable()
+                .httpBasic() // Habilita autenticação básica para o Swagger
+                .and()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(new TokenAuthenticationFilter(tokenService, userDetailsRepository), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 
-
+    // Configura usuário em memória para acessar o Swagger
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username(swaggerUsername) // seu usuário para o Swagger
+                .password(swaggerPassword) // sua senha para o Swagger
+                .roles("SWAGGER")
+                .build();
+        return new InMemoryUserDetailsManager(user);
+    }
 }

@@ -1,9 +1,8 @@
 package com.ads.clien.plus.service.impl;
 
-import com.ads.clien.plus.model.UserType;
-import com.ads.clien.plus.repository.UserTypeRepository;
+import com.ads.clien.plus.model.jpa.UserType;
+import com.ads.clien.plus.repository.jpa.UserTypeRepository;
 import com.ads.clien.plus.service.UserTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

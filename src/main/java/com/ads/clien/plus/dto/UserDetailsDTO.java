@@ -5,16 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserTypeDTO {
-    private Long id;
-    @NotBlank(message = "Valor Não pode ser vazio ou nulo")
-    private String name;
-    @NotBlank(message = "Valor Não pode ser vazio ou nulo")
-    private String description;
+public class UserDetailsDTO {
+    @Email(message = "Email inválido")
+    private String email;
+    @NotBlank(message = "Senha inválido")
+    private String password;
+
+    private String recoveryCode;
 }

@@ -1,7 +1,8 @@
 package com.ads.clien.plus.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
