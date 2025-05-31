@@ -21,12 +21,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
+    private static final String[] SWAGGER_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/swagger-resources/**"
+    };
 
-    @Value("${swagger.auth.username}")
-    private String swaggerUsername;
-
-    @Value("${swagger.auth.password}")
-    private String swaggerPassword;
+//    @Value("${swagger.auth.username}")
+//    private String swaggerUsername;
+//
+//    @Value("${swagger.auth.password}")
+//    private String swaggerPassword;
+//
     @Autowired
     private TokenService tokenService;
     @Autowired
@@ -38,17 +45,18 @@ public class WebSecurityConfig {
     //responsável pela configuração de autorizacao -> Acesso a URL's
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/subscription-type").permitAll()
-                .antMatchers(HttpMethod.GET, "/subscription-type/*").permitAll()
+        http.authorizeRequests()
+                .antMatchers(SWAGGER_WHITELIST).permitAll() // Permite acesso ao Swagger
+                .antMatchers(HttpMethod.GET, "/subscriptions-type").permitAll()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .antMatchers(HttpMethod.POST, "/payment/process").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers( "/auth/recovery-code/*").permitAll()
-                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated() // Protege o Swagger
+//                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated() // Protege o Swagger
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().disable()
-                .httpBasic() // Habilita autenticação básica para o Swagger
+//                .and()
+//                .formLogin().disable()
+//                .httpBasic()  Habilita autenticação básica para o Swagger
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -59,13 +67,13 @@ public class WebSecurityConfig {
     }
 
     // Configura usuário em memória para acessar o Swagger
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username(swaggerUsername) // seu usuário para o Swagger
-                .password(swaggerPassword) // sua senha para o Swagger
-                .roles("SWAGGER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService() {
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username(swaggerUsername) // seu usuário para o Swagger
+//                .password(swaggerPassword) // sua senha para o Swagger
+//                .roles("SWAGGER")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
 }

@@ -42,11 +42,12 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void loaddUser() {
-        userDTO = new UserDTO();
-        userDTO.setId(1L);
-        userDTO.setEmail("teste@teste.com");
-        userDTO.setCpf("12345678901");
-        userDTO.setUserTypeId(1L);
+      userDTO = UserDTO.builder()
+          .id(1L)
+          .email("teste@teste.com")
+          .cpf("12345678901")
+          .userTypeId(1L)
+          .build();
 
     }
 
@@ -100,18 +101,21 @@ class UserServiceImplTest {
     @Test
     void given_uploadPhoto_when_thereIsUserAndFileAndIsPNGorJPEG_then_updatePhotoAndReturnUser() throws Exception {
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/static/bor.png");
-        MockMultipartFile file = new MockMultipartFile("file", "bor.png", MediaType.MULTIPART_FORM_DATA_VALUE, fileInputStream);
+        MockMultipartFile file = new MockMultipartFile("file", "bor.png", MediaType.IMAGE_PNG_VALUE, fileInputStream);
 
         UserType userType = getUserType();
         User user = getUser(userType);
 
         when(userRepository.findById(2L)).thenReturn(Optional.of(user));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
         User userReturned = userServiceImpl.uploadPhoto(2L, file);
         assertNotNull(userReturned);
         assertNotNull(userReturned.getPhoto());
         assertEquals("bor.png", userReturned.getPhotoName());
 
         verify(userRepository, times(1)).findById(2L);
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
