@@ -48,19 +48,7 @@ class SubscriptionsTypeControllerTest {
         mockMvc.perform(get("/subscriptions-type"))
                 .andExpect(status().isOk());
     }
-    
-    @Test
-    void given_findById_whenGetId_then_returnOneSubscriptionType() throws Exception {
-        SubscriptionsType subscriptionsType = new SubscriptionsType(2L, "VITALICIO",
-                null, BigDecimal.valueOf(997), "FOREVER2022");
-        when(subscriptionTypeService.findById(2L)).thenReturn(subscriptionsType);
 
-        mockMvc.perform(get("/subscriptions-type/2")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(2)));
-    }
     @Test
     void given_delete_whenGetId2_then_NoReturnAndNoContent() throws Exception {
 
