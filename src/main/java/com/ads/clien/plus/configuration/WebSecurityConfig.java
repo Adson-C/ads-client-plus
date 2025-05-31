@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class WebSecurityConfig {
     private static final String[] SWAGGER_WHITELIST = {
-            "/v3/api-docs/**",
+            "/v1/api-docs/**",
             "/swagger-ui/**",
             "/v2/api-docs",
             "/swagger-resources/**"
