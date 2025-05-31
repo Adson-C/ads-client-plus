@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRecoveryCode {
-
     @Id
     private String id;
     @Indexed

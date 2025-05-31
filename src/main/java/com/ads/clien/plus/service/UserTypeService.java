@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserTypeService {
     // listar todos
     List<UserType> findAll();
+
+    
 //    // buscar por ID
 //    UserType findById(Long id);
 //    // criar

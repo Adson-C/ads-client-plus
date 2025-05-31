@@ -1,5 +1,6 @@
 package com.ads.clien.plus.dto;
 
+import junit.runner.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UserDTO {
     private Long id;
-    @NotBlank(message = "Valor Não pode ser vazio ou nulo")
     @Size(min = 6, message = "Valor deve conter pelo menos 6 caracteres")
     private String name;
     @Email(message = "Email inválido")
