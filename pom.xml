@@ -10,7 +10,8 @@
 	</parent>
 	<groupId>com.ads.client</groupId>
 	<artifactId>ads-client-plus</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<!-- major.minor.patch	-->
+	<version>1.0.0-RELEASE</version>
 	<name>ads-client-plus</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>

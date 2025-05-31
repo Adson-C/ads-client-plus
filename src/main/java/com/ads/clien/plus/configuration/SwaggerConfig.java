@@ -26,7 +26,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false).groupName("v0").select()
+        return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false).groupName("v1").select()
                 .apis(RequestHandlerSelectors.basePackage("com.ads.clien.plus.controller"))
                 .paths(PathSelectors.any()).build().securitySchemes(List.of(apiKey()))
                 .securityContexts(List.of(securityContexts()))
@@ -54,10 +54,10 @@ public class SwaggerConfig {
         ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
 
         return apiInfoBuilder
-                .title("Rasmoo Plus")
-                .description("Api para atender o client Rasmoo Plus")
-                .version("0.0.1")
-                .license("Rasmoo cursos de tecnologia")
+                .title("Adson Clien Plus")
+                .description("Api para atender o client Adson Clien Plus")
+                .version("1.0.0")
+                .license("Adson JavaDeveloper")
                 .build();
     }
     // tag authentication
